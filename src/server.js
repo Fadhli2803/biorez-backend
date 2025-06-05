@@ -5,8 +5,8 @@ const routes = require('./routes');
 
 const init = async () => {
   const server = Hapi.server({
-    port: 9000,
-    host: 'localhost',
+    port: process.env.PORT || 9000,
+    host: '0.0.0.0',
     routes: {
       cors: {
         origin: ['*'],
@@ -14,10 +14,8 @@ const init = async () => {
     },
   });
 
-  // Register Inert untuk file statis
   await server.register(Inert);
 
-  // Sajikan file statis dari folder public
   server.route({
     method: 'GET',
     path: '/image/{param*}',
